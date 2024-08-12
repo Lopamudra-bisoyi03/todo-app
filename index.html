@@ -39,10 +39,11 @@
                 <div id="export-import-section">
                     <button id="export-button">Export</button>
                     <button id="import-button">Import</button>
-                    <input type="file" id="import-file" style="display: none;">
+                    <input type="file" id="import-file">
                 </div>
             </div>
-            <div id="tasks"></div>
+            <div id="tasks">
+            </div>
         </section>
     </main>
 
@@ -60,19 +61,6 @@
                 </select>
                 <input type="datetime-local" id="edit-task-due" />
                 <button type="submit">Save Changes</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Add Subtask Modal -->
-    <div id="add-subtask-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>Add Subtask</h2>
-            <form id="add-subtask-form">
-                <input type="text" id="subtask-input" placeholder="Subtask description" />
-                <input type="datetime-local" id="subtask-due" />
-                <button type="submit">Add Subtask</button>
             </form>
         </div>
     </div>
