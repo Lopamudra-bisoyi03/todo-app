@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const priority = document.querySelector("#new-task-priority");
     const due = document.querySelector("#new-task-due");
     const tasksContainer = document.querySelector("#tasks");
-
     const modal = document.querySelector("#edit-task-modal");
     const closeButton = document.querySelector(".close-button");
     const editForm = document.querySelector("#edit-task-form");
@@ -119,9 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const deleteButton = document.createElement('button');
         deleteButton.classList.add('delete');
         deleteButton.innerText = 'Delete';
-
+        
         taskActionsDiv.appendChild(editButton);
         taskActionsDiv.appendChild(deleteButton);
+
         taskDiv.appendChild(taskActionsDiv);
         tasksContainer.appendChild(taskDiv);
 
@@ -131,18 +131,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Add event listeners for edit and delete buttons
         editButton.addEventListener('click', () => {
-            modal.style.display = "block";
-            currentTaskElement = taskDiv;
+                        modal.style.display = "block";
+                        currentTaskElement = taskDiv;
 
-            const [taskName, , taskDue] = taskInput.value.split(" - ");
-            editInput.value = taskName.trim();
-            editPriority.value = taskPriority.toLowerCase();
-            editDue.value = taskDue.replace("Due:", "").trim();
-        });
+                        const [taskName, , taskDue] = taskInput.value.split(" - ");
+                        editInput.value = taskName.trim();
+                        editPriority.value = taskPriority.toLowerCase();
+                        editDue.value = taskDue.replace("Due:", "").trim();
+                    });
 
-        deleteButton.addEventListener('click', () => {
-            tasksContainer.removeChild(taskDiv);
-        });
+                    deleteButton.addEventListener('click', () => {
+                        tasksContainer.removeChild(taskDiv);
+                    });
+
 
         // Add drag event listeners
         taskDiv.addEventListener('dragstart', (event) => {
@@ -164,7 +165,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 tasksContainer.insertBefore(draggingTask, afterElement);
             }
         });
-
+        closeButton.addEventListener('click', () => {
+            modal.style.display = "none";
+           
+        });
         tasksContainer.addEventListener('drop', () => {
             const draggingTask = document.querySelector('.dragging');
             if (draggingTask) {
@@ -258,6 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeButton.addEventListener('click', () => {
         modal.style.display = "none";
+       
     });
 
     document.addEventListener('click', (event) => {
@@ -346,15 +351,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to show notifications based on due date
     const showDueDateNotifications = () => {
-        
+
         const tasks = tasksContainer.querySelectorAll('.task');
-        const now = new Date()
+        // const now = new Date()
         tasks.forEach(task => {
             const dueDate = new Date(task.dataset.due);
             const now = new Date();
             const timeDiff = dueDate - now;
 
             if (timeDiff > 0 && timeDiff <= 24 * 60 * 60 * 1000) { 
+               
                 const notification = {
                     title: 'Task Due Soon!',
                     body: `Your task "${task.querySelector('.text').value}" is due soon.`,
@@ -375,11 +381,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Call showDueDateNotifications function on page load
-        if ('Notification' in document) {
+        
             Notification.requestPermission().then(permission => {
                 if (permission === 'granted') {
                     showDueDateNotifications();
                 }
+                else{
+                    prompt("give permission");
+                }
             });
-        }
+        
 });
